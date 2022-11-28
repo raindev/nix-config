@@ -152,7 +152,6 @@
     wget
     xclip
     wl-clipboard
-    tree
     exa
     fd
     ripgrep
