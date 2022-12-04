@@ -13,6 +13,12 @@
           ./xps13/configuration.nix
         ];
       };
+      black = nixpkgs.lib.nixosSystem {
+        modules = [
+          ./packages.nix
+          ./black/configuration.nix
+        ];
+      };
     };
   };
 }
