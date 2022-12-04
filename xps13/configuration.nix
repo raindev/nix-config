@@ -197,8 +197,10 @@
   # programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
+    enableSSHSupport = true;
+    # A socket allowing restricted access to the agent for remote forwarding.
+    enableExtraSocket = true;
   };
-  #programs.steam.enable = true;
 
   # List services that you want to enable:
   services.syncthing = {
