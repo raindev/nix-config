@@ -16,19 +16,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  # Setup keyfile
-  boot.initrd = {
-    secrets = { "/crypto_keyfile.bin" = null; };
-    luks = {
-      fido2Support = true;
-      devices."luks-2c58bfa3-2e6d-4577-9e64-57708c703a32".fido2 = {
-	# Doesn't work, resuting in "FIDO device can't be found" and "wrong secrete"
-        #passwordLess = true;
-        credential = "3deef164ba85a60c1674e1924a98526412c781bb11b41ee82491009d8d29596b6f8c2b41f09f85c3fe71508296da1e82";
-      };
-    };
-  };
-
   networking.hostName = "xps13"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
