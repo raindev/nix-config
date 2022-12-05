@@ -1,0 +1,19 @@
+location:
+    source_directories:
+        - /data/sync
+
+    repositories:
+        - /data/backup/borg
+
+storage:
+    compression: zstd
+    archive_name_format: "sync-{now}"
+
+retention:
+    prefix: "sync-"
+    keep_hourly: 24
+    keep_daily: 7
+    keep_weekly: 4
+
+hooks:
+  healthchecks: https://hc-ping.com/3aa69775-762f-4b5c-9eb6-ef27864f33cf

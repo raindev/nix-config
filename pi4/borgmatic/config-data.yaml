@@ -1,0 +1,28 @@
+location:
+    source_directories:
+        - /data/archive
+        - /data/backup/torrents
+        - /data/media/films/collection
+        - /data/media/music
+        - /data/media/music-videos
+        - /data/media/photos
+        - /data/media/series/collection
+        - /data/media/talks
+        - /data/media/videos
+        - /data/sync
+
+    repositories:
+        - /external/backup/borg
+
+storage:
+    compression: zstd
+    archive_name_format: "data-{now}"
+
+retention:
+    prefix: "data-"
+    keep_weekly: 4
+    keep_monthly: 6
+    keep_yearly: 1
+
+hooks:
+  healthchecks: https://hc-ping.com/b59b3394-00a2-411a-b8d2-680cd4bdac17

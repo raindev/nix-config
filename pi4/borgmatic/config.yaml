@@ -1,0 +1,27 @@
+location:
+    source_directories:
+        - /etc/nix
+        - /etc/nixos
+        - /boot
+        - /home
+        - /var/lib
+
+    repositories:
+        - /data/backup/borg
+
+
+    exclude_patterns:
+         - /home/*/.cache/
+
+storage:
+    compression: zstd
+    archive_name_format: "{hostname}-{now}"
+
+retention:
+    prefix: "{hostname}-"
+    keep_daily: 7
+    keep_weekly: 4
+    keep_monthly: 6
+
+hooks:
+  healthchecks: https://hc-ping.com/1f296352-890d-4954-9eb3-989e1701f550

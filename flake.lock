@@ -52,11 +52,45 @@
         "type": "github"
       }
     },
+    "nixpkgs-small": {
+      "locked": {
+        "lastModified": 1670114716,
+        "narHash": "sha256-Nu55yMyh77xOz4EMrgkS70awxL/Guh6SzG1XLAUHJLc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "4a8306947aa965121c7c38221d6f73e438a5d55e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11-small",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-small-2205": {
+      "locked": {
+        "lastModified": 1670083709,
+        "narHash": "sha256-UL4czXyVoKSCqAbNkfJEu2M+XhIVNwBGkyDt+UbtA5E=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e09913998d89659044c29ef5df4a86542e78a2ef",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "darwin": "darwin",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-small": "nixpkgs-small",
+        "nixpkgs-small-2205": "nixpkgs-small-2205"
       }
     }
   },
