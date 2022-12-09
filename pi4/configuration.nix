@@ -171,11 +171,6 @@
   nixpkgs.hostPlatform = "aarch64-linux";
 
   environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    git
-    wget
-    tree
-    exa
     nixos-option
     # rpi-eeprom-update firmware update utility
     raspberrypi-eeprom

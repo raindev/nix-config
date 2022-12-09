@@ -136,20 +136,13 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     nixos-option
-    wget
     xclip
     wl-clipboard
-    exa
-    fd
-    ripgrep
-    git
     # pass extensions have to be before pass itself in the list
     passExtensions.pass-otp
     (pass.withExtensions (ext: with ext; [ pass-otp ]))
-    neovim
     neovim-qt
     bash-completion
-    tmux
     wezterm
     meld
     gnome.gnome-tweaks
@@ -172,9 +165,6 @@
 
     # LSP servers
     rust-analyzer
-    rnix-lsp
-    sumneko-lua-language-server
-    nodePackages.bash-language-server
   ];
 
   environment.variables.EDITOR = "nvim";
