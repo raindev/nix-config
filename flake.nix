@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-small.url = "github:nixos/nixpkgs/nixos-22.11-small";
     nixpkgs-small-2205.url = "github:nixos/nixpkgs/nixos-22.05";
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -10,7 +11,7 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-small, nixpkgs-small-2205, darwin, nixos-hardware, ... }:
+  outputs = { nixpkgs, nixpkgs-unstable, nixpkgs-small, nixpkgs-small-2205, darwin, nixos-hardware, ... }:
     let
       system = "aarch64-linux";
       overlay-2205 = final: prev: {
@@ -19,6 +20,9 @@
           config.allowUnfree = true;
         };
       };
+      overlay-unstable = final: prev: {
+        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+      };
 
     in {
     nixosConfigurations = {
@@ -26,12 +30,14 @@
         modules = [
           nixos-hardware.nixosModules.dell-xps-13-9380
           ./packages.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
           ./xps13/configuration.nix
         ];
       };
       black = nixpkgs.lib.nixosSystem {
         modules = [
           ./packages.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
           ./black/configuration.nix
         ];
       };

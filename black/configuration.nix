@@ -167,7 +167,7 @@
     zulip
     obs-studio
     lutris
-    logseq
+    pkgs.unstable.logseq
 
     gnumake
     gcc
