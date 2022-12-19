@@ -155,7 +155,7 @@
     signal-desktop
     discord
     zulip
-    pkgs.unstable.logseq
+    logseq
 
     gnumake
     gcc
