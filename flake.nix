@@ -29,6 +29,7 @@
       xps13 = nixpkgs.lib.nixosSystem {
         modules = [
           nixos-hardware.nixosModules.dell-xps-13-9380
+          ./nix.nix
           ./packages.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
           ./xps13/configuration.nix
@@ -36,6 +37,7 @@
       };
       black = nixpkgs.lib.nixosSystem {
         modules = [
+          ./nix.nix
           ./packages.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
           ./black/configuration.nix
@@ -45,6 +47,7 @@
         system = "aarch64-linux";
         modules = [
           nixos-hardware.nixosModules.raspberry-pi-4
+          ./nix.nix
           ./packages.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-2205 ]; })
           ./pi4/configuration.nix
@@ -54,8 +57,9 @@
     darwinConfigurations."mini-mac" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
-        ./mini-mac/configuration.nix
+        ./nix.nix
         ./packages.nix
+        ./mini-mac/configuration.nix
       ];
     };
   };
