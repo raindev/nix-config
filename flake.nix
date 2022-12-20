@@ -26,6 +26,7 @@
         modules = [
           nixos-hardware.nixosModules.dell-xps-13-9380
           ./nix.nix
+          ./nixos.nix
           ./packages.nix
           ./xps13/configuration.nix
         ];
@@ -33,6 +34,7 @@
       black = nixpkgs.lib.nixosSystem {
         modules = [
           ./nix.nix
+          ./nixos.nix
           ./packages.nix
           ./black/configuration.nix
         ];
@@ -42,6 +44,7 @@
         modules = [
           nixos-hardware.nixosModules.raspberry-pi-4
           ./nix.nix
+          ./nixos.nix
           ./packages.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-2205 ]; })
           ./pi4/configuration.nix

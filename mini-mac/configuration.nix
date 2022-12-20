@@ -13,6 +13,8 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
+  # run hardlink deduplication for nix store
+  nix.settings.auto-optimise-store = true;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
