@@ -13,9 +13,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
-  nix.gc = {
+  nix.gc = pkgs.lib.mkForce {
     dates = "weekly";
     options = "--delete-older-than 90d";
   };

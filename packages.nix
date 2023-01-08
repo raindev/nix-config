@@ -11,6 +11,7 @@
     tmux
     tree
     wget
+    atop
 
     # LSP servers
     rnix-lsp
