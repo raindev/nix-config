@@ -53,6 +53,8 @@
          /data/backup 192.168.2.0/24(rw,sync,no_root_squash,no_subtree_check)
          /data/media 192.168.2.0/24(rw,sync,no_subtree_check)
          /data/sync 192.168.2.0/24(rw,sync,no_subtree_check)
+
+         /external 192.168.2.0/24(rw,sync,no_subtree_check)
        '';
      };
      samba = {
