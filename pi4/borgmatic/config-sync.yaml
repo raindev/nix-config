@@ -1,6 +1,6 @@
 location:
     source_directories:
-        - /data/sync
+        - /home/raindev/sync
 
     repositories:
         - /data/backup/borg
