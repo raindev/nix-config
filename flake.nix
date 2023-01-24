@@ -50,6 +50,14 @@
           ./pi4/configuration.nix
         ];
       };
+      netcup = nixpkgs-small.lib.nixosSystem {
+        modules = [
+          ./nix.nix
+          ./nixos.nix
+          ./packages.nix
+          ./netcup/configuration.nix
+        ];
+      };
     };
     darwinConfigurations."mini-mac" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
