@@ -113,7 +113,9 @@
       "api.lyze.app" = {
         forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass = "http://localhost:8002";
+        locations."/".return = "404";
+        locations."/waitlist".proxyPass = "http://localhost:8002/waitlist";
+        locations."/status".proxyPass = "http://localhost:8002/status";
       };
     };
   };
