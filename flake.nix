@@ -28,6 +28,7 @@
           ./nix.nix
           ./nixos.nix
           ./packages.nix
+          ./desktop.nix
           ./xps13/configuration.nix
         ];
       };
@@ -36,6 +37,7 @@
           ./nix.nix
           ./nixos.nix
           ./packages.nix
+          ./desktop.nix
           ./black/configuration.nix
         ];
       };
