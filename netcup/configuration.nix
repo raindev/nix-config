@@ -96,11 +96,33 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "andrew@raindev.io";
+
+  services.nginx = {
+    enable = true;
+    virtualHosts = {
+      "lyze.app" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          root = "/var/www/lyze/prod/";
+        };
+      };
+      "api.lyze.app" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://localhost:8002";
+      };
+    };
+  };
+
+  systemd.services.lyze-waitlist-prod = {
+    wantedBy = [ "multi-user.target" ];
+    script = "/srv/lyze/prod/waitlist-service/service 1>>/var/lyze/prod/waitlist.txt";
+  };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
