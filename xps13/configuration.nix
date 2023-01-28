@@ -180,12 +180,6 @@
     overrideDevices = false;
   };
 
-  fileSystems."/data" = {
-    device = "pi4:/data";
-    fsType = "nfs";
-    options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
-  };
-
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];

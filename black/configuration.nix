@@ -195,12 +195,6 @@
 
   services.openssh.enable = true;
 
-  fileSystems."/data" = {
-    device = "pi4:/data";
-    fsType = "nfs";
-    options = [ "user" ];
-  };
-
   programs.steam.enable = true;
 
   # Open ports in the firewall.
