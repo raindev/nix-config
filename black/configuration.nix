@@ -164,7 +164,6 @@
     lutris
     logseq
 
-    gnumake
     gcc
     rustup
     shellcheck

@@ -157,7 +157,6 @@
     zulip
     logseq
 
-    gnumake
     gcc
     shellcheck
     rustup

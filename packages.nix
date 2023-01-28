@@ -6,6 +6,8 @@
     exa
     fd
     git
+    git-lfs
+    gnumake
     neovim
     ripgrep
     tmux

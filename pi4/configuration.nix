@@ -176,7 +176,6 @@
     borgbackup
     borgmatic
     gnupg
-    gnumake
     # for Lua JIT
     gcc
   ];
