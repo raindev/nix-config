@@ -175,7 +175,6 @@
     libraspberrypi
     borgbackup
     borgmatic
-    gnupg
     # for Lua JIT
     gcc
   ];
@@ -189,10 +188,6 @@
       User = "raindev";
     };
   };
-  #programs.gnupg.agent = {
-  #        enable = true;
-  #        enableSSHSupport = true;
-  #};
 
   environment.variables.EDITOR = "nvim";
   nixpkgs.overlays = [

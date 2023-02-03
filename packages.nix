@@ -5,6 +5,7 @@
     # command line tools
     exa
     fd
+    gnupg
     git
     git-lfs
     gnumake
