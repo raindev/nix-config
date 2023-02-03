@@ -20,6 +20,11 @@
   boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "netcup"; # Define your hostname.
+  networking.interfaces.ens3.ipv6.addresses = [ {
+    address = "2a03:4000:2b:18b4::ff";
+    prefixLength = 64;
+  } ];
+
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
