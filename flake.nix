@@ -19,6 +19,20 @@
           config.allowUnfree = true;
         };
       };
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      overlay-openssh = self: super: {
+        openssh = super.openssh.overrideAttrs (old: {
+          src = super.fetchFromGitHub {
+            owner = "openssh";
+            repo = "openssh-portable";
+            rev = "5e8bfbd1f1c5b388c1c55976abc51f891de38fc4";
+            sha256 = "qJxPWX9p+ZyX4AI+nKk/uh1nmlwp+ZOlrij3ImNzc4A=";
+          };
+          # nixpkgs build from a release tarball which has configure prebuilt
+          buildInputs = (old.buildInputs or []) ++ [ pkgs.autoreconfHook ];
+          doCheck = false;
+        });
+      };
 
     in {
     nixosConfigurations = {
@@ -48,7 +62,7 @@
           ./nix.nix
           ./packages.nix
           ./nixos.nix
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-2205 ]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-2205 overlay-openssh ]; })
           ./pi4/configuration.nix
         ];
       };
@@ -57,6 +71,7 @@
           ./nix.nix
           ./packages.nix
           ./nixos.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-openssh ]; })
           ./netcup/configuration.nix
         ];
       };
