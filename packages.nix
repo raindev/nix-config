@@ -15,6 +15,7 @@
     tree
     wget
     atop
+    watchexec
 
     # LSP servers
     rnix-lsp
