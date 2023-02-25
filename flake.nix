@@ -22,12 +22,12 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       overlay-openssh = self: super: {
         openssh = super.openssh.overrideAttrs (old: {
-          src = super.fetchFromGitHub {
-            owner = "openssh";
-            repo = "openssh-portable";
-            rev = "5e8bfbd1f1c5b388c1c55976abc51f891de38fc4";
-            sha256 = "qJxPWX9p+ZyX4AI+nKk/uh1nmlwp+ZOlrij3ImNzc4A=";
-          };
+          patches = (old.patches or []) ++ [
+            (super.fetchpatch {
+              url = "https://github.com/raindev/openssh-portable/commit/723ff04a0ed78863ce7959a8f322ef0118100da4.patch";
+              sha256 = "uhC+YRCgn8Z2iIhPGNJFq/iwQEU42NBEbtmEJMt4Ve4=";
+            })
+          ];
           # nixpkgs build from a release tarball which has configure prebuilt
           buildInputs = (old.buildInputs or []) ++ [ pkgs.autoreconfHook ];
           doCheck = false;
