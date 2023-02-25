@@ -112,6 +112,9 @@
       hooks = {
         healthchecks = "https://hc-ping.com/fc3b4080-e50e-4512-95ac-0c0981eacdd1";
       };
+      consistency.checks = [{
+        name = "disabled";
+      }];
     };
   };
 

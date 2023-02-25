@@ -101,6 +101,9 @@
       };
       storage.compression = "zstd";
       hooks.healthchecks = "https://hc-ping.com/512bdad9-2539-470a-9fd7-55f546c8953c";
+      consistency.checks = [{
+        name = "disabled";
+      }];
     };
   };
   # NFS does not allow root access by default (root_squash)
