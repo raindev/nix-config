@@ -17,7 +17,7 @@
         })
       ];
       # nixpkgs build from a release tarball which has configure prebuilt
-      buildInputs = (prev.buildInputs or [ ]) ++ [ prev.pkgs.autoreconfHook ];
+      buildInputs = (old.buildInputs or [ ]) ++ [ prev.autoreconfHook ];
       doCheck = false;
     });
   };
