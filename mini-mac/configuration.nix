@@ -15,6 +15,8 @@
   services.nix-daemon.enable = true;
   # run hardlink deduplication for nix store
   nix.settings.auto-optimise-store = true;
+  # run Nix GC monthly
+  nix.gc.interval.Day = 1;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina

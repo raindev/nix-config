@@ -14,7 +14,6 @@
     tmux
     tree
     wget
-    atop
     watchexec
 
     # LSP servers

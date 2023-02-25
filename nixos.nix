@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # run hardlink deduplication for nix store every night
@@ -6,9 +6,14 @@
 
   # catch up on runs missed due to machine being powered off
   nix.gc.persistent = true;
+  nix.gc.dates = "monthly";
 
   # catch up on runs missed due to machine being powered off
   systemd.timers.nix-optimise.timerConfig = {
     Persistent = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    atop
+  ];
 }

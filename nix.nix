@@ -4,7 +4,6 @@
   # allow use of nix command and flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
-    dates = "monthly";
     # remove unused files from nix storage
     automatic = true;
     # remove obsolete generations
