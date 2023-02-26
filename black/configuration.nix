@@ -81,6 +81,7 @@
   # services.xserver.libinput.enable = true;
 
   services.resolved.enable = true;
+  systemd.timers.borgmatic.enable = true;
   services.borgmatic = {
     enable = true;
     settings = {

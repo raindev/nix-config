@@ -77,6 +77,7 @@
   # name resolution is broken with the default openresolv implementation
   services.resolved.enable = true;
 
+  systemd.timers.borgmatic.enable = true;
   services.borgmatic = {
     enable = true;
     settings = {
