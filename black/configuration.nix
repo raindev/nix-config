@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -81,43 +82,9 @@
   # services.xserver.libinput.enable = true;
 
   services.resolved.enable = true;
-  systemd.timers.borgmatic.enable = true;
-  services.borgmatic = {
-    enable = true;
-    settings = {
-      location = {
-        source_directories = [
-          "/etc/nix"
-          "/etc/nixos"
-          "/home"
-          "/boot"
-          "/var/lib"
-        ];
-        exclude_patterns = [
-          "/home/*/.cache/"
-          "/home/*/.local/share/Trash/"
-          "/home/*/.local/share/Steam/"
-        ];
-        repositories = [ "/data/backup/borg" ];
-      };
-      retention = {
-        prefix = "{hostname}-";
-        keep_daily = 7;
-        keep_weekly = 4;
-        keep_monthly = 12;
-      };
-      storage = {
-        compression = "zstd";
-        archive_name_format = "{hostname}-{now}";
-      };
-      hooks = {
-        healthchecks = "https://hc-ping.com/fc3b4080-e50e-4512-95ac-0c0981eacdd1";
-      };
-      consistency.checks = [{
-        name = "disabled";
-      }];
-    };
-  };
+
+  services.borgmatic.settings.hooks.healthchecks =
+    "https://hc-ping.com/fc3b4080-e50e-4512-95ac-0c0981eacdd1";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.raindev = {
@@ -149,7 +116,7 @@
     wl-clipboard
     # pass extensions have to be before pass itself in the list
     passExtensions.pass-otp
-    (pass.withExtensions (ext: with ext; [pass-otp]))
+    (pass.withExtensions (ext: with ext; [ pass-otp ]))
     neovim-qt
     bash-completion
     wezterm

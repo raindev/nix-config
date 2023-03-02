@@ -41,6 +41,7 @@
           nixos-hardware.nixosModules.dell-xps-13-9380
           ./nix.nix
           ./packages.nix
+          ./borgmatic.nix
           ./nixos.nix
           ./nixos-desktop.nix
           ./xps13/configuration.nix
@@ -50,6 +51,7 @@
         modules = [
           ./nix.nix
           ./packages.nix
+          ./borgmatic.nix
           ./nixos.nix
           ./nixos-desktop.nix
           ./black/configuration.nix

@@ -77,36 +77,9 @@
   # name resolution is broken with the default openresolv implementation
   services.resolved.enable = true;
 
-  systemd.timers.borgmatic.enable = true;
-  services.borgmatic = {
-    enable = true;
-    settings = {
-      location = {
-        source_directories = [
-          "/etc/nix"
-          "/etc/nixos"
-          "/home"
-          "/boot"
-          "/var/lib"
-        ];
-        exclude_patterns = [
-          "/home/*/.cache/"
-          "/home/*/.local/share/Trash/"
-        ];
-        repositories = [ "/data/backup/borg" ];
-      };
-      retention = {
-        keep_daily = 7;
-        keep_weekly = 4;
-        keep_monthly = 12;
-      };
-      storage.compression = "zstd";
-      hooks.healthchecks = "https://hc-ping.com/512bdad9-2539-470a-9fd7-55f546c8953c";
-      consistency.checks = [{
-        name = "disabled";
-      }];
-    };
-  };
+  services.borgmatic.settings.hooks.healthchecks =
+    "https://hc-ping.com/512bdad9-2539-470a-9fd7-55f546c8953c";
+
   # NFS does not allow root access by default (root_squash)
   #systemd.services.borgmatic.serviceConfig = {
   #  User = "raindev";
