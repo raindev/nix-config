@@ -11,8 +11,6 @@
   services.borgmatic.settings.hooks.healthchecks =
     "https://hc-ping.com/512bdad9-2539-470a-9fd7-55f546c8953c";
 
-  nixpkgs.hostPlatform = "x86_64-linux";
-
   environment.systemPackages = with pkgs; [
     nixos-option
     xclip
