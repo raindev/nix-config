@@ -170,8 +170,6 @@
   };
   security.sudo.wheelNeedsPassword = false;
 
-  nixpkgs.hostPlatform = "aarch64-linux";
-
   environment.systemPackages = with pkgs; [
     # rpi-eeprom-update firmware update utility
     raspberrypi-eeprom
