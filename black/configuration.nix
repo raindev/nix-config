@@ -11,8 +11,6 @@
       ./hardware-configuration.nix
     ];
 
-  nixpkgs.overlays = [ outputs.overlays.modifications ];
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

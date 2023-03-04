@@ -11,7 +11,6 @@
     ];
 
   nixpkgs.overlays = [
-    outputs.overlays.modifications
     outputs.overlays.openssh
     outputs.overlays.packages-2205
   ];

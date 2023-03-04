@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ outputs, pkgs, ... }:
 
 {
+  nixpkgs.overlays = [ outputs.overlays.modifications ];
+
   environment.systemPackages = with pkgs; [
     # command line tools
     exa
