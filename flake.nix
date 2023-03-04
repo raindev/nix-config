@@ -18,64 +18,65 @@
         "x86_64-linux"
         "aarch64-darwin"
       ];
-    in rec {
-    devShells = forAllSystems (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in import ./shells.nix { inherit pkgs; }
-    );
-    overlays = import ./overlays.nix { inherit inputs; };
+    in
+    rec {
+      devShells = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./shells.nix { inherit pkgs; }
+      );
+      overlays = import ./overlays.nix { inherit inputs; };
 
-    nixosConfigurations = {
-      xps13 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [
-          nixos-hardware.nixosModules.dell-xps-13-9380
-          ./nix.nix
-          ./packages.nix
-          ./borgmatic.nix
-          ./nixos.nix
-          ./nixos-desktop.nix
-          ./xps13/configuration.nix
-        ];
+      nixosConfigurations = {
+        xps13 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            nixos-hardware.nixosModules.dell-xps-13-9380
+            ./nix.nix
+            ./packages.nix
+            ./borgmatic.nix
+            ./nixos.nix
+            ./nixos-desktop.nix
+            ./xps13/configuration.nix
+          ];
+        };
+        black = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./nix.nix
+            ./packages.nix
+            ./borgmatic.nix
+            ./nixos.nix
+            ./nixos-desktop.nix
+            ./black/configuration.nix
+          ];
+        };
+        pi4 = nixpkgs-small.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            nixos-hardware.nixosModules.raspberry-pi-4
+            ./nix.nix
+            ./packages.nix
+            ./nixos.nix
+            ./pi4/configuration.nix
+          ];
+        };
+        netcup = nixpkgs-small.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./nix.nix
+            ./packages.nix
+            ./nixos.nix
+            ./netcup/configuration.nix
+          ];
+        };
       };
-      black = nixpkgs.lib.nixosSystem {
+      darwinConfigurations."mini-mac" = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./nix.nix
           ./packages.nix
-          ./borgmatic.nix
-          ./nixos.nix
-          ./nixos-desktop.nix
-          ./black/configuration.nix
-        ];
-      };
-      pi4 = nixpkgs-small.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [
-          nixos-hardware.nixosModules.raspberry-pi-4
-          ./nix.nix
-          ./packages.nix
-          ./nixos.nix
-          ./pi4/configuration.nix
-        ];
-      };
-      netcup = nixpkgs-small.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [
-          ./nix.nix
-          ./packages.nix
-          ./nixos.nix
-          ./netcup/configuration.nix
+          ./mini-mac/configuration.nix
         ];
       };
     };
-    darwinConfigurations."mini-mac" = darwin.lib.darwinSystem {
-      specialArgs = { inherit inputs outputs; };
-      modules = [
-        ./nix.nix
-        ./packages.nix
-        ./mini-mac/configuration.nix
-      ];
-    };
-  };
 }
