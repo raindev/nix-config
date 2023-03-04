@@ -19,6 +19,10 @@
         "aarch64-darwin"
       ];
     in rec {
+    devShells = forAllSystems (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in import ./shells.nix { inherit pkgs; }
+    );
     overlays = import ./overlays.nix { inherit inputs; };
 
     nixosConfigurations = {
