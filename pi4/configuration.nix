@@ -173,7 +173,6 @@
   nixpkgs.hostPlatform = "aarch64-linux";
 
   environment.systemPackages = with pkgs; [
-    nixos-option
     # rpi-eeprom-update firmware update utility
     raspberrypi-eeprom
     # vcgencmd, e.g. to check for throttling

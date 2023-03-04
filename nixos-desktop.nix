@@ -73,8 +73,33 @@
   };
   programs.steam.enable = true;
   environment.systemPackages = with pkgs; [
-    firefox
+    xclip
+    wl-clipboard
+
+    gcc
+    shellcheck
+    rustup
+    rust-script
+    rust-analyzer
+
+    gnome.gnome-tweaks
+    gnome.gnome-shell-extensions
+    gnome.pomodoro
+    gnomeExtensions.appindicator
     gnomeExtensions.night-theme-switcher
+
+    neovim-qt
+    wezterm
+    firefox
+    logseq
+    meld
+    plexamp
+
+    tdesktop
+    signal-desktop
+    element-desktop
+    discord
+    zulip
   ];
 
 }
