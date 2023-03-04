@@ -68,10 +68,7 @@
     enable = true;
     user = "raindev";
     dataDir = "/home/raindev";
-    overrideFolders = false;
-    overrideDevices = false;
   };
-  programs.steam.enable = true;
   environment.systemPackages = with pkgs; [
     xclip
     wl-clipboard

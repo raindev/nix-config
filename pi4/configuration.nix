@@ -91,9 +91,6 @@
       user = "raindev";
       dataDir = "/home/raindev";
       guiAddress = "0.0.0.0:8384";
-      # TODO: remove once my patch is available
-      overrideFolders = false;
-      overrideDevices = false;
       extraOptions = {
         gui = {
           user = "andrew";
