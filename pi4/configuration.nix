@@ -13,11 +13,6 @@
     ];
   };
 
-  nix.gc = pkgs.lib.mkForce {
-    dates = "weekly";
-    options = "--delete-older-than 90d";
-  };
-
   networking.hostId = "1bea433d";
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.kernelParams = [
@@ -29,8 +24,6 @@
   networking.hostName = "pi4";
   networking.interfaces.eth0.useDHCP = true;
   networking.firewall.enable = false;
-
-  i18n.defaultLocale = "en_US.UTF-8";
 
   services = {
     zfs = {
@@ -63,14 +56,6 @@
           path = "/data";
         };
       };
-    };
-    openssh = {
-      enable = true;
-      permitRootLogin = "no";
-      # Remove stale sockets on connect (for GPG socker forwarding)
-      # https://wiki.archlinux.org/title/GnuPG#Forwarding_gpg-agent_and_ssh-agent_to_remote
-      extraConfig = "StreamLocalBindUnlink yes";
-      passwordAuthentication = false;
     };
     syncthing = {
       enable = true;

@@ -57,6 +57,7 @@
             ./nix.nix
             ./packages.nix
             ./nixos.nix
+            ./server.nix
             ./pi4/configuration.nix
           ];
         };
@@ -66,6 +67,7 @@
             ./nix.nix
             ./packages.nix
             ./nixos.nix
+            ./server.nix
             ./netcup/configuration.nix
           ];
         };
