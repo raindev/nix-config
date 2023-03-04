@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ outputs, inputs, config, pkgs, ... }:
 
 {
   #nix.nixPath = [
@@ -13,6 +13,15 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.modifications
+      outputs.overlays.packages-2205
+    ];
+    config.allowUnfree = true;
+  };
+
   nix.gc = pkgs.lib.mkForce {
     dates = "weekly";
     options = "--delete-older-than 90d";
@@ -164,7 +173,6 @@
     extraGroups = [ "wheel" ];
   };
 
-  nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = "aarch64-linux";
 
   environment.systemPackages = with pkgs; [
@@ -190,14 +198,6 @@
   };
 
   environment.variables.EDITOR = "nvim";
-  nixpkgs.overlays = [
-    (self: super: {
-       neovim = super.neovim.override {
-	 viAlias = true;
-	 vimAlias = true;
-       };
-     })
-  ];
 
   services.cron = {
 	  enable = true;
