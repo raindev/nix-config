@@ -3,6 +3,7 @@
 {
   nixpkgs.overlays = [ outputs.overlays.modifications ];
 
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # command line tools
     exa

@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{ config, pkgs, lib, ... }: with lib; {
   # run hardlink deduplication for nix store every night
   nix.optimise.automatic = true;
 
@@ -11,6 +9,16 @@
   # catch up on runs missed due to machine being powered off
   systemd.timers.nix-optimise.timerConfig = {
     Persistent = true;
+  };
+
+  users.users.raindev = {
+    isNormalUser = true;
+    description = "Andrew";
+    extraGroups = [ "wheel" ]
+      ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
+    packages = with pkgs; [
+      firefox
+    ];
   };
 
   environment.systemPackages = with pkgs; [

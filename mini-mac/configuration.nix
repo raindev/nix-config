@@ -13,8 +13,6 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  # run hardlink deduplication for nix store
-  nix.settings.auto-optimise-store = true;
   # run Nix GC monthly
   nix.gc.interval.Day = 1;
 
