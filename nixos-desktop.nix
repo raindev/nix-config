@@ -25,7 +25,6 @@
     options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
   };
 
-  time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_GB.utf8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.utf8";

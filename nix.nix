@@ -1,6 +1,8 @@
 { ... }:
 
 {
+  time.timeZone = "Europe/Berlin";
+
   environment.variables.EDITOR = "nvim";
 
   nix = {

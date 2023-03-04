@@ -1,17 +1,8 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { outputs, inputs, config, pkgs, ... }:
 
 {
-  #nix.nixPath = [
-  #  "nixpkgs=/home/raindev/code/nixpkgs"
-  #  "nixos-config=/etc/nixos/configuration.nix"
-  #];
   imports =
     [
-      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -20,7 +11,6 @@
       outputs.overlays.openssh
       outputs.overlays.packages-2205
     ];
-    config.allowUnfree = true;
   };
 
   nix.gc = pkgs.lib.mkForce {
@@ -37,11 +27,8 @@
   ];
 
   networking.hostName = "pi4";
-  networking.wireless.enable = false;
   networking.interfaces.eth0.useDHCP = true;
   networking.firewall.enable = false;
-
-  time.timeZone = "Europe/Berlin";
 
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -54,7 +41,6 @@
       # requires com.sun:auto-snapshot=true ZFS property to be set
       autoSnapshot.enable = true;
     };
-    #resolved.enable = true;
     nfs.server = {
       enable = true;
       exports = ''
@@ -84,7 +70,7 @@
       # Remove stale sockets on connect (for GPG socker forwarding)
       # https://wiki.archlinux.org/title/GnuPG#Forwarding_gpg-agent_and_ssh-agent_to_remote
       extraConfig = "StreamLocalBindUnlink yes";
-      #passwordAuthentication = false;
+      passwordAuthentication = false;
     };
     syncthing = {
       enable = true;
@@ -178,18 +164,6 @@
     gcc
   ];
 
-  # GPG expects the agent socket to be in /run/user/1000/gnupg.
-  # SSH however does not create a parent directory for forwarded sockets.
-  systemd.services.gpg-socketdir = {
-    script = "${pkgs.gnupg}/bin/gpgconf --create-socketdir";
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      User = "raindev";
-    };
-  };
-
-  environment.variables.EDITOR = "nvim";
-
   services.cron = {
     enable = true;
     systemCronJobs = [
@@ -203,6 +177,6 @@
   environment.etc."borgmatic/config-sync.yaml".source = ./borgmatic/config-sync.yaml;
   environment.etc."borgmatic/config-data.yaml".source = ./borgmatic/config-data.yaml;
 
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.05";
 }
 
