@@ -5,6 +5,9 @@
      viAlias = true;
      vimAlias = true;
    };
+  };
+
+  openssh = final: prev: {
     # patch OpenSSH to create paren dir for forwarded sockets
     openssh = prev.openssh.overrideAttrs (old: {
       patches = (old.patches or []) ++ [

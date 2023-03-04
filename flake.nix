@@ -23,6 +23,7 @@
 
     nixosConfigurations = {
       xps13 = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
         modules = [
           nixos-hardware.nixosModules.dell-xps-13-9380
           ./nix.nix
@@ -34,6 +35,7 @@
         ];
       };
       black = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
         modules = [
           ./nix.nix
           ./packages.nix
@@ -64,7 +66,7 @@
       };
     };
     darwinConfigurations."mini-mac" = darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
+      specialArgs = { inherit inputs outputs; };
       modules = [
         ./nix.nix
         ./packages.nix

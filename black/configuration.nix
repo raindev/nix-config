@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ outputs, config, pkgs, ... }:
 
 {
   imports =
@@ -10,6 +10,8 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
+  nixpkgs.overlays = [ outputs.overlays.modifications ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
