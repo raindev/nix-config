@@ -1,9 +1,10 @@
 { outputs, pkgs, ... }:
 
 {
-  nixpkgs.overlays = [ outputs.overlays.modifications ];
+  imports = [
+    ./nixpkgs.nix
+  ];
 
-  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # command line tools
     exa

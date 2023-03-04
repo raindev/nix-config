@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }: with lib; {
+{ inputs, config, pkgs, lib, ... }: with lib; {
+
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
   # run hardlink deduplication for nix store every night
   nix.optimise.automatic = true;
 
@@ -21,4 +26,9 @@
   environment.systemPackages = with pkgs; [
     atop
   ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users.raindev = import ./home.nix;
+  };
 }

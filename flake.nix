@@ -8,9 +8,13 @@
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-small, nixpkgs-small-2205, darwin, nixos-hardware, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-small, nixpkgs-small-2205, nixos-hardware, darwin, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -72,6 +76,7 @@
           ];
         };
       };
+
       darwinConfigurations."mini-mac" = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [
@@ -80,5 +85,17 @@
           ./mini-mac/configuration.nix
         ];
       };
+
+      homeConfigurations = forAllSystems (system: {
+        "raindev@t480s" = home-manager.lib.homeConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./nixpkgs.nix
+            ./home.nix
+          ];
+        };
+      });
+
     };
 }
