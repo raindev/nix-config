@@ -169,10 +169,6 @@
     };
   };
   security.sudo.wheelNeedsPassword = false;
-  users.users.raindev = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-  };
 
   nixpkgs.hostPlatform = "aarch64-linux";
 

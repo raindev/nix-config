@@ -74,6 +74,7 @@
   };
   programs.steam.enable = true;
   environment.systemPackages = with pkgs; [
+    firefox
     gnomeExtensions.night-theme-switcher
   ];
 

@@ -16,9 +16,6 @@
     description = "Andrew";
     extraGroups = [ "wheel" ]
       ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
-    packages = with pkgs; [
-      firefox
-    ];
   };
 
   environment.systemPackages = with pkgs; [
