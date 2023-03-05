@@ -27,7 +27,7 @@
 
     # LSP servers
     rnix-lsp
-    sumneko-lua-language-server
+    lua-language-server
     nodePackages.bash-language-server
   ];
 }
