@@ -78,6 +78,8 @@
       };
 
       darwinConfigurations."mini-mac" = darwin.lib.darwinSystem {
+        # has to be specified explicitly
+        system = "aarch64-darwin";
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./nix.nix

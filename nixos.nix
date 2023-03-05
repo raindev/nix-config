@@ -25,6 +25,7 @@
 
   environment.systemPackages = with pkgs; [
     atop
+    nixos-option
   ];
 
   home-manager = {

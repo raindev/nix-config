@@ -19,7 +19,6 @@
     tree
     wget
     watchexec
-    nixos-option
     bash-completion
     # pass extensions have to be before pass itself in the list
     passExtensions.pass-otp
