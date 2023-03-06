@@ -89,6 +89,7 @@
     firefox
     logseq
     meld
+    spotify
     plexamp
 
     tdesktop
