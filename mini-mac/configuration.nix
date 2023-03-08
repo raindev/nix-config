@@ -20,6 +20,7 @@
 
   environment.systemPackages = with pkgs; [
     rustup
+    pinentry_mac
   ];
 
   users.knownUsers = [ "raindev" ];
