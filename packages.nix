@@ -13,8 +13,10 @@
     git
     git-lfs
     gnumake
+    gnused
     neovim
     ripgrep
+    shellcheck
     tmux
     tree
     wget

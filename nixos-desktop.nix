@@ -71,9 +71,10 @@
   environment.systemPackages = with pkgs; [
     xclip
     wl-clipboard
+    # install gitk as well
+    (git.override { guiSupport = true; })
 
     gcc
-    shellcheck
     rustup
     rust-script
     rust-analyzer
