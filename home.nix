@@ -22,6 +22,7 @@
       push.autoSetupRemote = true;
     };
   };
+  home.file.".curlrc".source = home/curlrc;
 
   home.stateVersion = "22.11";
 }
