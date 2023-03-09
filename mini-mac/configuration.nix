@@ -27,7 +27,7 @@
   # the configuration will not be updated for already existing user
   users.users.raindev = {
     description = "Andrew Barchuk";
-    uid = 501;
+    uid = 555;
     gid = 20;
     home = "/Users/raindev";
     createHome = true;
