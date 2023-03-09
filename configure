@@ -71,14 +71,14 @@ elif [[ "$OSTYPE" == darwin* ]]; then
 		[ -e /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 		[ -e /usr/local/bin/brew ] && eval "$(/usr/local/bin/brew shellenv)"
 	fi
-	pushd /tmp/ > /dev/null
 	if ! command -v darwin-rebuild > /dev/null ; then
+		pushd /tmp/ > /dev/null
 		set +u
 		nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 		./result/bin/darwin-installer
 		set -u
+		popd > /dev/null
 	fi
-	popd > /dev/null
 	flake_lock_args=(
 		--update-input darwin
 		--update-input nixpkgs
