@@ -1,0 +1,157 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p gitMinimal gnupg
+
+set -euo pipefail
+
+# returns 0 if the repository has been updated, 1 otherwise
+update_repo () {
+	current_commit=$(git rev-parse @)
+	if ! git diff-index --quiet @; then
+		git stash --quiet
+		git pull --ff-only --quiet
+		git stash pop --quiet
+	else
+		git pull --ff-only --quiet
+	fi
+	new_commit=$(git rev-parse @)
+	if [ "$current_commit" = "$new_commit" ]; then
+		return 1
+	else
+		return 0
+	fi
+}
+
+if [ ! -e "$HOME/code/nix-config" ]; then
+	echo '>setting up nix-config'
+	git clone https://github.com/raindev/nix-config.git "$HOME/code/nix-config/"
+	git remote set-url origin git@github.com:raindev/nix-config.git
+else
+	pushd "$HOME/code/nix-config/" > /dev/null
+	if update_repo; then
+		echo -e 'Restarting updated script\n'
+		exec "$HOME/code/nix-config/configure"
+	fi
+	nix flake lock "${flake_lock_args[@]}"
+	popd > /dev/null
+fi
+
+if [[ "$OSTYPE" == linux* ]]; then
+	echo 'Configuring Linux'
+
+	if [ -e /etc/NIXOS ]; then
+		nixos_desktop_hosts=(xps13 black)
+		nixos_server_hosts=(pi4 netcup)
+		if [[ ${nixos_desktop_hosts[*]} =~ $(hostname) ]]; then
+			flake_lock_args=(
+				--update-input nixpkgs
+				--update-input nixos-hardware
+				--update-input home-manager
+				--commit-lock-file --commit-lockfile-summary
+				'Update nixpkgs, nixos-hardware, home-manager')
+		elif [[ ${nixos_server_hosts[*]} =~ $(hostname) ]]; then
+			flake_lock_args=(
+				--update-input nixpkgs-small
+				--update-input home-manager
+				--commit-lock-file --commit-lockfile-summary
+				'Update nixpkgs-small, home-manager')
+		else
+			echo 'Unrecognized NixOS host'
+			exit 1
+		fi
+		nix_apply='sudo nixos-rebuild switch --flake .'
+    else
+		if ! command -v home-manager > /dev/null ; then
+			# TODO install home-manager
+			true
+		fi
+		flake_lock_args=(
+			--update-input nixpkgs
+			--update-input home-manager
+			--commit-lock-file --commit-lockfile-summary
+			'Update nixpkgs, home-manager')
+		# TODO verify
+		nix_apply='home-manager switch --flake .'
+	fi
+elif [[ "$OSTYPE" == darwin* ]]; then
+	echo ' Thinking differently'
+
+	echo -e "\n>installing updates"
+	sudo softwareupdate --install --recommended
+
+	if ! command -v brew > /dev/null ; then
+		echo '>installing Homebrew'
+		bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		eval "$(/opt/homebrew/bin/brew shellenv)"
+	fi
+	pushd /tmp/ > /dev/null
+	if ! command -v darwin-rebuild > /dev/null ; then
+		nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+		./result/bin/darwin-installer
+	fi
+	popd > /dev/null
+	flake_lock_args=(
+		--update-input darwin
+		--update-input nixpkgs
+		--update-input home-manager
+		--commit-lock-file --commit-lockfile-summary
+		'Update darwin, nixpkgs, home-manager')
+	nix_apply='darwin-rebuild switch --flake .'
+else
+	echo 'Unrecognized or unsupported system'
+	exit 1
+fi
+
+(cd "$HOME/code/nix-config" && $nix_apply)
+
+if ! gpg --list-key andrew@raindev.io > /dev/null; then
+	echo '>setting up GPG'
+	echo 'Insert the smartcard'
+	read -r
+	echo 'Fetch the public key'
+	gpg --edit-card
+	echo 'Set key trust level'
+	gpg --edit-key andrew@raindev.io
+fi
+
+if command -v rustup > /dev/null ; then
+	echo '>upgrading Rust'
+	rustup upgrade
+fi
+
+echo '>setting up dotfiles'
+if [ ! -e "$HOME/code/dotfiles" ]; then
+	git clone git@github.com:raindev/dotfiles.git \
+		"$HOME/code/dotfiles"
+	(cd "$HOME/code/dotfiles"; make all)
+fi
+pushd "$HOME/code/dotfiles/" > /dev/null
+if update_repo; then
+	make all
+fi
+popd > /dev/null
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
+echo '>setting up scripts'
+if [ ! -e "$HOME/code/scripts" ]; then
+	git clone git@github.com:raindev/scripts.git \
+		"$HOME/code/scripts"
+fi
+(cd "$HOME/code/scripts/" && (update_repo || true))
+
+if [ ! -e "$HOME/.password-store" ]; then
+	echo '>setting up pass'
+	git clone git@github.com:raindev/passwords.git\
+		"$HOME/.password-store"
+	pass git init
+fi
+echo '>updating password store'
+pass git pull --rebase --quiet
+pass git push --quiet
+
+echo '>ensuring symlinks exist'
+[ -e "$HOME/org" ] || \
+	ln -s "$HOME/notes/org" "$HOME/org"
+[ -e "$HOME/cs" ] || \
+	ln -s "$HOME/notes/cheatsheets" "$HOME/cs"
+
+echo -e "\nAll done. Enjoy your $(date +%A)!"
