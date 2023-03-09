@@ -22,6 +22,20 @@ update_repo () {
 	fi
 }
 
+if [ ! -e "$HOME/code/nix-config" ]; then
+	echo '>setting up nix-config'
+	git clone https://github.com/raindev/nix-config.git \
+		"$HOME/code/nix-config/"
+	(cd "$HOME/code/nix-config" && git remote set-url origin \
+		git@github.com:raindev/nix-config.git)
+else
+	pushd "$HOME/code/nix-config/" > /dev/null
+	if update_repo; then
+		exec "$HOME/code/nix-config/configure"
+	fi
+	popd > /dev/null
+fi
+
 if [[ "$OSTYPE" == linux* ]]; then
 	echo 'Configuring Linux'
 
@@ -72,11 +86,9 @@ elif [[ "$OSTYPE" == darwin* ]]; then
 		[ -e /usr/local/bin/brew ] && eval "$(/usr/local/bin/brew shellenv)"
 	fi
 	if ! command -v darwin-rebuild > /dev/null ; then
-		pushd /tmp/ > /dev/null
-		set +u
-		nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-		./result/bin/darwin-installer
-		set -u
+		pushd "$HOME/code/nix-config/" > /dev/null
+		nix build .#darwinConfigurations."$(hostname)".system
+		./result/sw/bin/darwin-rebuild switch --flake .
 		popd > /dev/null
 	fi
 	flake_lock_args=(
@@ -91,23 +103,10 @@ else
 	exit 1
 fi
 
-if [ ! -e "$HOME/code/nix-config" ]; then
-	echo '>setting up nix-config'
-	git clone https://github.com/raindev/nix-config.git \
-		"$HOME/code/nix-config/"
-	(cd "$HOME/code/nix-config" && git remote set-url origin \
-		git@github.com:raindev/nix-config.git)
-else
-	pushd "$HOME/code/nix-config/" > /dev/null
-	if update_repo; then
-		echo -e 'Restarting updated script\n'
-		exec "$HOME/code/nix-config/configure"
-	fi
-	nix flake lock "${flake_lock_args[@]}"
-	popd > /dev/null
-fi
-
-(cd "$HOME/code/nix-config" && $nix_apply)
+pushd "$HOME/code/nix-config/" > /dev/null
+nix flake lock "${flake_lock_args[@]}"
+$nix_apply
+popd > /dev/null
 
 if ! gpg --list-key andrew@raindev.io > /dev/null; then
 	echo '>setting up GPG'
