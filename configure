@@ -68,7 +68,8 @@ elif [[ "$OSTYPE" == darwin* ]]; then
 	if ! command -v brew > /dev/null ; then
 		echo '>installing Homebrew'
 		bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-		eval "$(/opt/homebrew/bin/brew shellenv)"
+		[ -e /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+		[ -e /usr/local/bin/brew ] && eval "$(/usr/local/bin/brew shellenv)"
 	fi
 	pushd /tmp/ > /dev/null
 	if ! command -v darwin-rebuild > /dev/null ; then
