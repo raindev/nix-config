@@ -1,4 +1,4 @@
-[[https://github.com/raindev/nix-config/actions/workflows/test.yml][CI build status][https://github.com/raindev/nix-config/actions/workflows/test.yml/badge.svg]]
+[[https://github.com/raindev/nix-config/actions/workflows/test.yml][https://github.com/raindev/nix-config/actions/workflows/test.yml/badge.svg]]
 
 * Personal Infrastructure Configuration
 
