@@ -24,7 +24,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ],
         "utils": "utils"
       },
@@ -105,6 +105,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1678230755,
+        "narHash": "sha256-SFAXgNjNTXzcAideXcP0takfUGVft/VR5CACmYHg+Fc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a7cc81913bb3cd1ef05ed0ece048b773e1839e51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "darwin": "darwin",
@@ -112,7 +128,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-small": "nixpkgs-small",
-        "nixpkgs-small-2205": "nixpkgs-small-2205"
+        "nixpkgs-small-2205": "nixpkgs-small-2205",
+        "nixpkgs-stable": "nixpkgs-stable"
       }
     },
     "utils": {

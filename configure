@@ -60,18 +60,16 @@ if [[ "$OSTYPE" == linux* ]]; then
 			exit 1
 		fi
 		nix_apply='sudo nixos-rebuild switch --flake .'
-    else
+	else
 		if ! command -v home-manager > /dev/null ; then
-			# TODO install home-manager
-			true
+			nix run .#homeConfigurations.raindev.activationPackage
 		fi
 		flake_lock_args=(
 			--update-input nixpkgs
 			--update-input home-manager
 			--commit-lock-file --commit-lockfile-summary
 			'Update nixpkgs, home-manager')
-		# TODO verify
-		nix_apply='home-manager switch --flake .'
+		nix_apply='home-manager switch --flake .#raindev'
 	fi
 elif [[ "$OSTYPE" == darwin* ]]; then
 	echo ' Thinking differently'

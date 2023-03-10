@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs-small.url = "github:nixos/nixpkgs/nixos-22.11-small";
     nixpkgs-small-2205.url = "github:nixos/nixpkgs/nixos-22.05";
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -10,7 +11,7 @@
     };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
   };
 
@@ -89,7 +90,7 @@
       };
 
       homeConfigurations = forAllSystems (system: {
-        "raindev@t480s" = home-manager.lib.homeConfiguration {
+        raindev = home-manager.lib.homeConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
