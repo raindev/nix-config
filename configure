@@ -123,17 +123,7 @@ if command -v rustup > /dev/null ; then
 	rustup upgrade
 fi
 
-echo '>setting up dotfiles'
-if [ ! -e "$HOME/code/dotfiles" ]; then
-	git clone git@github.com:raindev/dotfiles.git \
-		"$HOME/code/dotfiles"
-	(cd "$HOME/code/dotfiles"; make all)
-fi
-pushd "$HOME/code/dotfiles/" > /dev/null
-if update_repo; then
-	make all
-fi
-popd > /dev/null
+echo '>setting up Neovim'
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 echo '>setting up scripts'
