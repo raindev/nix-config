@@ -5,6 +5,11 @@
 
   programs.home-manager.enable = true;
 
+  programs.ssh = {
+    enable = true;
+    hashKnownHosts = true;
+    extraConfig = "AddKeysToAgent yes";
+  };
   programs.git = {
     enable = true;
     lfs.enable = true;

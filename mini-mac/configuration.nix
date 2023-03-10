@@ -21,6 +21,11 @@
     enableCompletion = true;
   };
 
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
   # /etc/shells
   environment.shells = [ pkgs.bashInteractive ];
 
@@ -44,7 +49,15 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.raindev = import ../home.nix;
+    users.raindev = {
+      imports = [
+        ../home.nix
+        ../desktop.nix
+      ];
+      programs.ssh.matchBlocks."pi4.local netcup.raindev.io".extraOptions = {
+        "RemoteForward" = "/run/user/1000/gnupg/S.gpg-agent /Users/raindev/.gnupg/S.gpg-agent.extra";
+      };
+    };
   };
 
   system.stateVersion = 4;
