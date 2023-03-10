@@ -106,6 +106,7 @@ fi
 pushd "$HOME/code/nix-config/" > /dev/null
 nix flake lock "${flake_lock_args[@]}"
 $nix_apply
+git push
 popd > /dev/null
 
 if ! gpg --list-key andrew@raindev.io > /dev/null; then
