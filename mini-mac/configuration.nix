@@ -5,6 +5,12 @@
     inputs.home-manager.darwinModules.home-manager
   ];
 
+  homebrew.enable = true;
+  homebrew.masApps = {
+    Xcode = 497799835;
+    Omnivore = 1564031042;
+  };
+
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
   # run Nix GC monthly
@@ -27,7 +33,7 @@
   # the configuration will not be updated for already existing user
   users.users.raindev = {
     description = "Andrew Barchuk";
-    uid = 555;
+    uid = 501;
     gid = 20;
     home = "/Users/raindev";
     createHome = true;
