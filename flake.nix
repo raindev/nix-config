@@ -89,16 +89,18 @@
         ];
       };
 
-      homeConfigurations = forAllSystems (system: {
-        raindev = home-manager.lib.homeConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
+      homeConfigurations = {
+        raindev = home-manager.lib.homeManagerConfiguration {
+          # for whatever reason homeConfigurations.raindev.activationPackage
+          # is missing otherwise
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             ./nixpkgs.nix
             ./home.nix
           ];
         };
-      });
+      };
 
     };
 }

@@ -62,6 +62,7 @@ if [[ "$OSTYPE" == linux* ]]; then
 		nix_apply='sudo nixos-rebuild switch --flake .'
 	else
 		if ! command -v home-manager > /dev/null ; then
+			echo '>installing Home Manager'
 			nix run .#homeConfigurations.raindev.activationPackage
 		fi
 		flake_lock_args=(

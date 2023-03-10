@@ -2,6 +2,7 @@
 
 {
   home.username = "raindev";
+  home.homeDirectory = "/home/raindev";
 
   programs.home-manager.enable = true;
 
