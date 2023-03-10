@@ -30,6 +30,11 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users.raindev = import ./home.nix;
+    users.raindev = {
+      imports = [
+        ./home.nix
+        ./home-linux.nix
+      ];
+    };
   };
 }

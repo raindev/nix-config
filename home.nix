@@ -22,8 +22,11 @@
       push.autoSetupRemote = true;
     };
   };
-  home.file.".curlrc".text = ''--write-out "\n"'';
 
+  home.file.".bash_functions".source = home/bash_functions;
+  home.file.".wezterm.lua".source = home/wezterm.lua;
+  xdg.configFile."nvim".source = home/nvim;
+  home.file.".curlrc".text = ''--write-out "\n"'';
 
   home.stateVersion = "22.11";
 }
