@@ -57,6 +57,11 @@
       programs.ssh.matchBlocks."pi4.local netcup.raindev.io".extraOptions = {
         "RemoteForward" = "/run/user/1000/gnupg/S.gpg-agent /Users/raindev/.gnupg/S.gpg-agent.extra";
       };
+      home.file = {
+        ".bashrc".source = ../home/darwin/bashrc;
+        ".profile".source = ../home/darwin/profile;
+        ".tmux.conf".source = ../home/darwin/tmux.conf;
+      };
     };
   };
 
