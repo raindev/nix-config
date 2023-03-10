@@ -3,3 +3,5 @@
 * Personal Infrastructure Configuration
 
 Set up using Nix. At the center is [[file:flake.nix][a Nix flake]] which ties it all together. [[file:bootstrap][The bootstrapping script]] allows to quickly set up a new machine using =curl -sS https://raindev.io/setup.sh | sh= and [[file:configure][the configuration script]] (available as =up=) streamlines the configuration workflow.
+
+[[https://builtwithnix.org][https://builtwithnix.org/badge.svg]]
