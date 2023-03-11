@@ -69,10 +69,10 @@ if [[ "$OSTYPE" == linux* ]]; then
 		echo -e 'Configuring generic Linux\n'
 		need_home_manager=true
 		flake_lock_args=(
-			--update-input nixpkgs-stable
+			--update-input nixpkgs
 			--update-input home-manager
 			--commit-lock-file --commit-lockfile-summary
-			'Update nixpkgs-stable, home-manager')
+			'Update nixpkgs, home-manager')
 		nix_apply='home-manager switch -b backup --flake .#raindev'
 	fi
 elif [[ "$OSTYPE" == darwin* ]]; then
