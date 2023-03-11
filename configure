@@ -89,12 +89,12 @@ if [ ! -e "$HOME/code/nix-config" ]; then
 	(cd "$HOME/code/nix-config" && git remote set-url origin \
 		git@github.com:raindev/nix-config.git)
 
-	if [ "$need_home_manager" = true ] && ! command -v home-manager > /dev/null; then
+	if [ $need_home_manager = true ] && ! command -v home-manager > /dev/null; then
 		echo '>installing Home Manager'
 		nix run .#homeConfigurations.raindev.activationPackage
 	fi
 
-	if [ "$need_darwin" = true ] && ! command -v darwin-rebuild > /dev/null ; then
+	if [ $need_darwin = true ] && ! command -v darwin-rebuild > /dev/null ; then
 		echo '>installing nix-darwin'
 		pushd "$HOME/code/nix-config/" > /dev/null
 		nix build .#darwinConfigurations."$(hostname)".system
