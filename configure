@@ -22,6 +22,24 @@ update_repo () {
 	fi
 }
 
+mkdir -p "$HOME/.config/nix/"
+echo 'experimental-features = nix-command flakes' > "$HOME/.config/nix/nix.conf"
+
+mkdir -p "$HOME/code/nix-config"
+pushd "$HOME/code/nix-config/" > /dev/null
+if [ ! -e "$HOME/code/nix-config/.git" ]; then
+	echo '>setting up nix-config'
+	git clone -q https://github.com/raindev/nix-config.git \
+		"$HOME/code/nix-config/"
+	git remote set-url origin git@github.com:raindev/nix-config.git
+else
+	echo '>updating nix-config'
+	if update_repo; then
+		echo '>restarting script after update'
+		exec "$HOME/code/nix-config/configure"
+	fi
+fi
+
 need_home_manager=false
 need_darwin=false
 if [[ "$OSTYPE" == linux* ]]; then
@@ -82,38 +100,17 @@ else
 	exit 1
 fi
 
-if [ ! -e "$HOME/code/nix-config" ]; then
-	echo '>setting up nix-config'
-	git clone -q https://github.com/raindev/nix-config.git \
-		"$HOME/code/nix-config/"
-	(cd "$HOME/code/nix-config" && git remote set-url origin \
-		git@github.com:raindev/nix-config.git)
-
-	mkdir -p "$HOME/.config/nix/"
-	echo 'experimental-features = nix-command flakes' > "$HOME/.config/nix/nix.conf"
-	pushd "$HOME/code/nix-config/" > /dev/null
-	if [ $need_home_manager = true ] && ! command -v home-manager > /dev/null; then
-		echo '>installing Home Manager'
-		nix run .#homeConfigurations.raindev.activationPackage
-	fi
-	if [ $need_darwin = true ] && ! command -v darwin-rebuild > /dev/null ; then
-		echo '>installing nix-darwin'
-		nix build .#darwinConfigurations."$(hostname)".system
-		./result/sw/bin/darwin-rebuild switch --flake .
-	fi
-	$nix_apply
-	popd > /dev/null
-else
-	echo '>updating nix-config'
-	pushd "$HOME/code/nix-config/" > /dev/null
-	if update_repo; then
-		exec "$HOME/code/nix-config/configure"
-	fi
-	nix flake lock "${flake_lock_args[@]}"
-	$nix_apply
-	git push --quiet
-	popd > /dev/null
+if [ $need_home_manager = true ] && ! command -v home-manager > /dev/null; then
+	echo '>installing Home Manager'
+	nix run .#homeConfigurations.raindev.activationPackage
 fi
+if [ $need_darwin = true ] && ! command -v darwin-rebuild > /dev/null ; then
+	echo '>installing nix-darwin'
+	nix build .#darwinConfigurations."$(hostname)".system
+	./result/sw/bin/darwin-rebuild switch --flake .
+fi
+echo '>building nix-config'
+$nix_apply
 
 if ! gpg --list-key 'Andrew Barchuk' > /dev/null; then
 	echo '>setting up GPG'
@@ -126,6 +123,11 @@ if ! gpg --list-key 'Andrew Barchuk' > /dev/null; then
 	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 	export SSH_AUTH_SOCK
 fi
+
+echo '>updating dependencies'
+nix flake lock "${flake_lock_args[@]}"
+$nix_apply
+git push --quiet
 
 if command -v rustup > /dev/null ; then
 	echo '>upgrading Rust'
