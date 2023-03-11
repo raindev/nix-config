@@ -88,6 +88,21 @@ if [ ! -e "$HOME/code/nix-config" ]; then
 		"$HOME/code/nix-config/"
 	(cd "$HOME/code/nix-config" && git remote set-url origin \
 		git@github.com:raindev/nix-config.git)
+
+	if [ "$need_home_manager" = true ] && ! command -v home-manager > /dev/null; then
+		echo '>installing Home Manager'
+		nix run .#homeConfigurations.raindev.activationPackage
+	fi
+
+	if [ "$need_darwin" = true ] && ! command -v darwin-rebuild > /dev/null ; then
+		echo '>installing nix-darwin'
+		pushd "$HOME/code/nix-config/" > /dev/null
+		nix build .#darwinConfigurations."$(hostname)".system
+		./result/sw/bin/darwin-rebuild switch --flake .
+		popd > /dev/null
+	fi
+
+	$nix_apply
 else
 	echo '>updating nix-config'
 	pushd "$HOME/code/nix-config/" > /dev/null
@@ -95,26 +110,10 @@ else
 		exec "$HOME/code/nix-config/configure"
 	fi
 	nix flake lock "${flake_lock_args[@]}"
+	$nix_apply
+	git push --quiet
 	popd > /dev/null
 fi
-
-if [ "$need_home_manager" = true ] && ! command -v home-manager > /dev/null; then
-	echo '>installing Home Manager'
-	nix run .#homeConfigurations.raindev.activationPackage
-fi
-if [ "$need_darwin" = true ] && ! command -v darwin-rebuild > /dev/null ; then
-	echo '>installing nix-darwin'
-	pushd "$HOME/code/nix-config/" > /dev/null
-	nix build .#darwinConfigurations."$(hostname)".system
-	./result/sw/bin/darwin-rebuild switch --flake .
-	popd > /dev/null
-fi
-
-pushd "$HOME/code/nix-config/" > /dev/null
-echo '>building nix-config'
-$nix_apply
-git push --quiet
-popd > /dev/null
 
 if ! gpg --list-key andrew@raindev.io > /dev/null; then
 	echo '>setting up GPG'
