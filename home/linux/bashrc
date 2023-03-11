@@ -2,10 +2,9 @@
 [[ "$-" == *i* ]] || return
 
 alias grep='grep --color=always'
-alias gtypist='gtypist --personal-best --max-error=1'
 alias ls='exa --classify'
 alias t='tmux attach || tmux new'
-alias up='$HOME/code/nix-config/configure'
+alias up='$HOME/code/nix-config/configure.sh'
 if ! command -v fd > /dev/null && command -v fdfind > /dev/null ; then
     alias fd='fdfind'
 fi
