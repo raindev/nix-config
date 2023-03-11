@@ -51,10 +51,10 @@ if [[ "$OSTYPE" == linux* ]]; then
 	else
 		need_home_manager=true
 		flake_lock_args=(
-			--update-input nixpkgs
+			--update-input nixpkgs-stable
 			--update-input home-manager
 			--commit-lock-file --commit-lockfile-summary
-			'Update nixpkgs, home-manager')
+			'Update nixpkgs-stable, home-manager')
 		nix_apply='home-manager switch --flake .#raindev'
 	fi
 elif [[ "$OSTYPE" == darwin* ]]; then
