@@ -84,7 +84,7 @@ fi
 
 if [ ! -e "$HOME/code/nix-config" ]; then
 	echo '>setting up nix-config'
-	git clone https://github.com/raindev/nix-config.git \
+	git clone -q https://github.com/raindev/nix-config.git \
 		"$HOME/code/nix-config/"
 	(cd "$HOME/code/nix-config" && git remote set-url origin \
 		git@github.com:raindev/nix-config.git)
@@ -113,7 +113,7 @@ fi
 pushd "$HOME/code/nix-config/" > /dev/null
 echo '>building nix-config'
 $nix_apply
-git push
+git push --quiet
 popd > /dev/null
 
 if ! gpg --list-key andrew@raindev.io > /dev/null; then
@@ -136,14 +136,14 @@ nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 echo '>setting up scripts'
 if [ ! -e "$HOME/code/scripts" ]; then
-	git clone git@github.com:raindev/scripts.git \
+	git clone -q git@github.com:raindev/scripts.git \
 		"$HOME/code/scripts"
 fi
 (cd "$HOME/code/scripts/" && (update_repo || true))
 
 if [ ! -e "$HOME/.password-store" ]; then
 	echo '>setting up pass'
-	git clone git@github.com:raindev/passwords.git\
+	git clone -q git@github.com:raindev/passwords.git\
 		"$HOME/.password-store"
 	pass git init
 fi
