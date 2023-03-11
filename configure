@@ -89,20 +89,20 @@ if [ ! -e "$HOME/code/nix-config" ]; then
 	(cd "$HOME/code/nix-config" && git remote set-url origin \
 		git@github.com:raindev/nix-config.git)
 
+	mkdir "$HOME/.config/nix/"
+	echo 'experimental-features = nix-command flakes' > "$HOME/.config/nix/nix.conf"
+	pushd "$HOME/code/nix-config/" > /dev/null
 	if [ $need_home_manager = true ] && ! command -v home-manager > /dev/null; then
 		echo '>installing Home Manager'
 		nix run .#homeConfigurations.raindev.activationPackage
 	fi
-
 	if [ $need_darwin = true ] && ! command -v darwin-rebuild > /dev/null ; then
 		echo '>installing nix-darwin'
-		pushd "$HOME/code/nix-config/" > /dev/null
 		nix build .#darwinConfigurations."$(hostname)".system
 		./result/sw/bin/darwin-rebuild switch --flake .
-		popd > /dev/null
 	fi
-
 	$nix_apply
+	popd > /dev/null
 else
 	echo '>updating nix-config'
 	pushd "$HOME/code/nix-config/" > /dev/null
@@ -123,6 +123,7 @@ if ! gpg --list-key 'Andrew Barchuk' > /dev/null; then
 	gpg --edit-card
 	echo 'Set key trust level'
 	gpg --edit-key andrew@raindev.io
+	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
 
 if command -v rustup > /dev/null ; then

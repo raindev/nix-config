@@ -11,7 +11,7 @@
     };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -98,6 +98,8 @@
           modules = [
             ./nixpkgs.nix
             ./home.nix
+            ./home-linux.nix
+            ./home-manager.nix
           ];
         };
       };
