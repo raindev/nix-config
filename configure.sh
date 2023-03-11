@@ -33,9 +33,8 @@ if [ ! -e "$HOME/code/nix-config/.git" ]; then
 		"$HOME/code/nix-config/"
 	git remote set-url origin git@github.com:raindev/nix-config.git
 else
-	echo '>updating nix-config'
 	if update_repo; then
-		echo '>restarting script after update'
+		echo '>restarting the script after an update'
 		exec "$HOME/code/nix-config/configure"
 	fi
 fi
@@ -43,12 +42,11 @@ fi
 need_home_manager=false
 need_darwin=false
 if [[ "$OSTYPE" == linux* ]]; then
-	echo 'Configuring Linux'
-
 	if [ -e /etc/NIXOS ]; then
 		nixos_desktop_hosts=(xps13 black)
 		nixos_server_hosts=(pi4 netcup)
 		if [[ ${nixos_desktop_hosts[*]} =~ $(hostname) ]]; then
+			echo -e 'Configuring NixOS desktop\n'
 			flake_lock_args=(
 				--update-input nixpkgs
 				--update-input nixos-hardware
@@ -56,6 +54,7 @@ if [[ "$OSTYPE" == linux* ]]; then
 				--commit-lock-file --commit-lockfile-summary
 				'Update nixpkgs, nixos-hardware, home-manager')
 		elif [[ ${nixos_server_hosts[*]} =~ $(hostname) ]]; then
+			echo -e 'Configuring NixOS server\n'
 			flake_lock_args=(
 				--update-input nixpkgs-small
 				--update-input home-manager
@@ -67,6 +66,7 @@ if [[ "$OSTYPE" == linux* ]]; then
 		fi
 		nix_apply='sudo nixos-rebuild switch --flake .'
 	else
+		echo -e 'Configuring generic Linux\n'
 		need_home_manager=true
 		flake_lock_args=(
 			--update-input nixpkgs-stable
@@ -76,9 +76,9 @@ if [[ "$OSTYPE" == linux* ]]; then
 		nix_apply='home-manager switch -b backup --flake .#raindev'
 	fi
 elif [[ "$OSTYPE" == darwin* ]]; then
-	echo ' Thinking differently'
+	echo -e ' Thinking differently\n'
 
-	echo -e "\n>installing updates"
+	echo ">installing updates"
 	sudo softwareupdate --install --recommended
 
 	if ! command -v brew > /dev/null ; then
