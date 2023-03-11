@@ -6,6 +6,6 @@ if ! command -v nix > /dev/null; then
 	curl -sSL https://nixos.org/nix/install > /tmp/nix-install.sh
 	sh /tmp/nix-install.sh --daemon
 fi
-curl -sSL https://raw.githubusercontent.com/raindev/nix-config/main/configure > /tmp/configure.sh
+curl -sSL https://raw.githubusercontent.com/raindev/nix-config/main/configure.sh > /tmp/configure.sh
 chmod +x /tmp/configure.sh
 bash -l -c /tmp/configure.sh
