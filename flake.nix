@@ -89,7 +89,7 @@
       };
 
       homeConfigurations = {
-        raindev = home-manager.lib.homeManagerConfiguration {
+        charcoal = home-manager.lib.homeManagerConfiguration {
           # for whatever reason homeConfigurations.raindev.activationPackage
           # is missing otherwise
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -99,6 +99,7 @@
             ./home.nix
             ./home-linux.nix
             ./home-manager.nix
+            ./charcoal/home.nix
           ];
         };
       };

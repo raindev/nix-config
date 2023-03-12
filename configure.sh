@@ -73,7 +73,7 @@ if [[ "$OSTYPE" == linux* ]]; then
 			--update-input home-manager
 			--commit-lock-file --commit-lockfile-summary
 			'Update nixpkgs, home-manager')
-		nix_apply='home-manager switch -b backup --flake .#raindev'
+		nix_apply="home-manager switch -b backup --flake .#$(hostname)"
 	fi
 elif [[ "$OSTYPE" == darwin* ]]; then
 	echo -e ' Thinking differently\n'
@@ -102,7 +102,7 @@ fi
 
 if [ $need_home_manager = true ] && ! command -v home-manager > /dev/null; then
 	echo '>installing Home Manager'
-	nix run .#homeConfigurations.raindev.activationPackage
+	nix run .#homeConfigurations."$(hostname)".activationPackage
 fi
 if [ $need_darwin = true ] && ! command -v darwin-rebuild > /dev/null ; then
 	echo '>installing nix-darwin'
