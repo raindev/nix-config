@@ -11,5 +11,13 @@
     enable = true;
     package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
   };
+  programs.exa.enable = true;
+  services.syncthing.enable = true;
+
+  home.packages = with pkgs; [
+    source-code-pro
+    tmux
+    wl-clipboard
+  ];
 
 }
