@@ -18,6 +18,7 @@
     source-code-pro
     tmux
     wl-clipboard
+    xclip
   ];
 
 }

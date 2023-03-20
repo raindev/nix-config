@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   home.username = "raindev";
@@ -29,8 +29,10 @@
     };
   };
 
+  home.activation.wezterm = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    ln -sf ~/code/nix-config/home/wezterm.lua ~/.wezterm.lua
+  '';
   home.file.".bash_functions".source = home/bash_functions;
-  home.file.".wezterm.lua".source = home/wezterm.lua;
   xdg.configFile."nvim".source = home/nvim;
   home.file.".curlrc".text = ''--write-out "\n"'';
 
