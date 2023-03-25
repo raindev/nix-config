@@ -23,7 +23,6 @@
   };
 
   home.packages = with pkgs; [
-    source-code-pro
     tmux
     wl-clipboard
     xclip
