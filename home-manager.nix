@@ -14,6 +14,14 @@
   programs.exa.enable = true;
   services.syncthing.enable = true;
 
+  nix = {
+    package = pkgs.nixFlakes;
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+    };
+  };
+
   home.packages = with pkgs; [
     source-code-pro
     tmux
