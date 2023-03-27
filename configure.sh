@@ -159,5 +159,7 @@ echo '>ensuring symlinks exist'
 	ln -s "$HOME/notes/org" "$HOME/org"
 [ -e "$HOME/cs" ] || \
 	ln -s "$HOME/notes/cheatsheets" "$HOME/cs"
+[ -e "$HOME/logseq" ] || \
+	ln -s "$HOME/notes/logseq" "$HOME/logseq"
 
 echo -e "\nAll done. Enjoy your $(date +%A)!"
