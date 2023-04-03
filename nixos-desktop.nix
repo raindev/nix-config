@@ -100,12 +100,4 @@
     zulip
   ];
 
-  home-manager.users.raindev = {
-    imports = [ ./desktop.nix ];
-    xdg.configFile."autostart/gnome-keyring-ssh.desktop".source = home/gnome-keyring-ssh.desktop;
-    programs.ssh.matchBlocks."pi4.local netcup.raindev.io".extraOptions = {
-      "RemoteForward" = "/run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra";
-    };
-  };
-
 }

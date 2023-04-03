@@ -97,7 +97,6 @@
           modules = [
             ./nixpkgs.nix
             ./home.nix
-            ./home-linux.nix
             ./home-manager.nix
             ./charcoal/home.nix
           ];

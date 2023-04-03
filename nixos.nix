@@ -33,7 +33,6 @@
     users.raindev = {
       imports = [
         ./home.nix
-        ./home-linux.nix
       ];
     };
   };
