@@ -1,3 +1,5 @@
+Archived: see https://github.com/raindev/dotfiles
+
 [[https://github.com/raindev/nix-config/actions/workflows/test.yml][https://github.com/raindev/nix-config/actions/workflows/test.yml/badge.svg]]
 
 * Personal Infrastructure Configuration
